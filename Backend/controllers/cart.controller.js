@@ -5,9 +5,17 @@ const Product = require('../models/product.model');
 const calculateTotal = (items) =>
   items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+// Only the cart's owner (or an admin) may read/modify it
+const isOwnerOrAdmin = (req) =>
+  req.user._id.toString() === req.params.userId || req.user.role === 'admin';
+
 //Get logged in user cart (By ID)
 exports.getCart = async (req, res) => {
   try {
+    if (!isOwnerOrAdmin(req)) {
+      return res.status(403).json({ success: false, message: 'Not authorized to view this cart' });
+    }
+
     const cart = await Cart.findOne({ user: req.params.userId }).populate(
       'items.product',
       'name images price'
@@ -24,6 +32,10 @@ exports.getCart = async (req, res) => {
 //Add item in Cart or Create the Cart if it doesn't exist
 exports.addItemToCart = async (req, res) => {
   try {
+    if (!isOwnerOrAdmin(req)) {
+      return res.status(403).json({ success: false, message: 'Not authorized to modify this cart' });
+    }
+
     const { productId, quantity = 1 } = req.body;
     const product = await Product.findById(productId);
     if (!product) {
@@ -53,6 +65,10 @@ exports.addItemToCart = async (req, res) => {
 //Update the quantity of cart item
 exports.updateCartItem = async (req, res) => {
   try {
+    if (!isOwnerOrAdmin(req)) {
+      return res.status(403).json({ success: false, message: 'Not authorized to modify this cart' });
+    }
+
     const { productId, quantity } = req.body;
     const cart = await Cart.findOne({ user: req.params.userId });
     if (!cart) {
@@ -66,8 +82,6 @@ exports.updateCartItem = async (req, res) => {
 
     item.quantity = quantity;
     cart.totalPrice = calculateTotal(cart.items);
-    console.log(JSON.stringify(cart.items, null, 2));
-    console.log("Total:", cart.totalPrice);
     await cart.save();
 
     res.status(200).json({ success: true, data: cart });
@@ -79,6 +93,10 @@ exports.updateCartItem = async (req, res) => {
 //Remove Item From Cart
 exports.removeItemFromCart = async (req, res) => {
   try {
+    if (!isOwnerOrAdmin(req)) {
+      return res.status(403).json({ success: false, message: 'Not authorized to modify this cart' });
+    }
+
     const cart = await Cart.findOne({ user: req.params.userId });
     if (!cart) {
       return res.status(404).json({ success: false, message: 'Cart not found' });
@@ -99,6 +117,10 @@ exports.removeItemFromCart = async (req, res) => {
 //Clear entire Cart
 exports.clearCart = async (req, res) => {
   try {
+    if (!isOwnerOrAdmin(req)) {
+      return res.status(403).json({ success: false, message: 'Not authorized to modify this cart' });
+    }
+
     const cart = await Cart.findOne({ user: req.params.userId });
     if (!cart) {
       return res.status(404).json({ success: false, message: 'Cart not found' });

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
-import { ShoppingCart, Menu, X, User, LogOut } from 'lucide-react';
+import { ShoppingCart, Menu, X, User, LogOut, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../components/AuthContext';
-import Logo from '../assets/MarkusHubLogo.png'
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -32,9 +31,11 @@ const Navbar = () => {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         {/* Logo placeholder */}
         <Link to="/" className="flex items-center gap-2">
-          <img src={Logo} alt='M' className="flex h-8 w-8 items-center justify-center rounded-md bg-teal-700 font-serif text-lg font-bold text-white"/>
+          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-teal-700 font-serif text-lg font-bold text-white">
+            S
+          </span>
           <span className="font-serif text-xl font-semibold text-stone-900">
-            Markus
+            StoreName
           </span>
         </Link>
 
@@ -64,6 +65,15 @@ const Navbar = () => {
 
           {user ? (
             <div className="flex items-center gap-4">
+              {user.role === 'admin' && (
+                <Link
+                  to="/admin"
+                  className="flex items-center gap-1.5 text-sm font-medium text-teal-700 hover:text-teal-800"
+                >
+                  <LayoutDashboard size={16} />
+                  Admin Panel
+                </Link>
+              )}
               <span className="flex items-center gap-1.5 text-sm font-medium text-stone-700">
                 <User size={16} />
                 {user.name}
@@ -127,6 +137,15 @@ const Navbar = () => {
 
             {user ? (
               <>
+                {user.role === 'admin' && (
+                  <Link
+                    to="/admin"
+                    className="flex items-center gap-2 text-sm font-medium text-teal-700"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <LayoutDashboard size={18} /> Admin Panel
+                  </Link>
+                )}
                 <span className="flex items-center gap-2 text-sm font-medium text-stone-700">
                   <User size={18} /> {user.name}
                 </span>
