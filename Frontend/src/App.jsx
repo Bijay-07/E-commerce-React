@@ -17,10 +17,12 @@ import Orders from './pages/Order';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <BrowserRouter>
+    <ToastContainer/>
       <AuthProvider>
         <Routes>
           <Route element={<MainLayout />}>
