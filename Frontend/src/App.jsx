@@ -7,7 +7,7 @@ import AdminDashboard from './admin/pages/Dashboard';
 import AdminCatalog from './admin/pages/Catalog';
 import AdminOrders from './admin/pages/Orders';
 import AdminUsers from './admin/pages/Users';
-import MainLayout from './layouts/MainLayout';
+import MainLayout from './Layouts/MainLayout';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetails';

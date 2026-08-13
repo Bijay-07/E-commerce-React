@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://e-commerce-react-two-khaki.vercel.app/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://e-commerce-react-three-woad.vercel.app/api',
   headers: {
     'Content-Type': 'application/json',
   },
