@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 import { ShoppingCart, Menu, X, User, LogOut, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../components/AuthContext';
+import MarkusLogo from '../assets/Markus_Logo.jpeg'
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -31,11 +32,9 @@ const Navbar = () => {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         {/* Logo placeholder */}
         <Link to="/" className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-teal-700 font-serif text-lg font-bold text-white">
-            S
-          </span>
+          <img src={MarkusLogo} alt='M' className="flex h-9 w-9 items-center justify-center rounded-md bg-teal-700 font-serif text-lg font-bold text-white"/>
           <span className="font-serif text-xl font-semibold text-stone-900">
-            StoreName
+            Markus
           </span>
         </Link>
 

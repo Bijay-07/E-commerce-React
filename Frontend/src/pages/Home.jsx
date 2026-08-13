@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { ArrowRight } from 'lucide-react';
 import productService from '../api/productService';
 import ProductCard from '../components/ProductCard';
-import Logo from "../assets/MarkusHubLogo.png"
+import ShoppingBag from '../assets/Shopping_Bag.png';
 
 const FEATURED_COUNT = 8;
 
@@ -56,7 +56,7 @@ const Home = () => {
             <div className="absolute h-64 w-64 rounded-full bg-teal-700/10" />
             <div className="absolute h-44 w-44 translate-x-8 -translate-y-6 rounded-full bg-teal-700/20" />
             <div className="relative flex h-72 w-72 items-center justify-center rounded-2xl bg-white shadow-sm">
-              <img src={Logo} alt='LOGO' className="flex h-72 w-72 items-center justify-center rounded-2xl shadow-sm"/>
+              <img src={ShoppingBag} alt='LOGO' className="flex h-72 w-72 items-center justify-center rounded-2xl shadow-sm"/>
             </div>
           </div>
         </div>
