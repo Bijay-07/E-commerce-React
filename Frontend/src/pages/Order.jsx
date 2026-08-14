@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router';
-import { PackageSearch, CheckCircle2, XCircle } from 'lucide-react';
+import { PackageSearch, CheckCircle2, XCircle, Download } from 'lucide-react';
 import orderService from '../api/orderService';
 import { useAuth } from '../components/AuthContext';
+import { generateReceiptPDF } from '../utils/Generatereceipt';
 
 const STATUS_STYLES = {
   pending: 'bg-amber-100 text-amber-700',
@@ -50,6 +51,14 @@ const Orders = () => {
       setError(err.message || 'Could not cancel order');
     } finally {
       setCancellingId(null);
+    }
+  };
+
+  const handleDownloadReceipt = async (order) => {
+    try {
+      await generateReceiptPDF(order);
+    } catch (err) {
+      setError(err.message || 'Could not generate receipt');
     }
   };
 
@@ -156,6 +165,18 @@ const Orders = () => {
                 >
                   <XCircle size={16} />
                   {cancellingId === order._id ? 'Cancelling...' : 'Cancel Order'}
+                </button>
+              </div>
+            )}
+
+            {order.orderStatus === 'delivered' && (
+              <div className="mt-3 flex justify-end">
+                <button
+                  onClick={() => handleDownloadReceipt(order)}
+                  className="flex items-center gap-1.5 text-sm font-medium text-teal-700 hover:text-teal-800"
+                >
+                  <Download size={16} />
+                  Download Receipt
                 </button>
               </div>
             )}
